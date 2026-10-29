@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Study Planner</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<div class="app-container">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <h2 class="logo">StudyBoard</h2>
+
+        <nav id="main-navigation">
+            <button class="nav-button active" data-section="dashboard">Dashboard</button>
+            <button class="nav-button" data-section="timetable">Timetable</button>
+            <button class="nav-button" data-section="tasks">Tasks</button>
+            <button class="nav-button" data-section="subjects">Subjects</button>
+            <button class="nav-button" data-section="timer">Study Timer</button>
+            <button class="nav-button" data-section="progress">Progress</button>
+            <button class="nav-button" data-section="notes">Notes</button>
+        </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <header class="topbar">
+            <div>
+                <h1 id="page-title">Dashboard</h1>
+                <p>Plan your day. Focus on your goals.</p>
+            </div>
+
+            <div class="date-box" id="current-date"></div>
+        </header>
+
+        <!-- DASHBOARD -->
+        <section id="dashboard-section" class="app-section">
+
+            <div class="welcome-card">
+                <h2>Welcome to your Study Board!</h2>
+                <p>Organise your studies and make every session count.</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Total Tasks</h3>
+                    <p class="stat-number" id="total-tasks">0</p>
+                    <span>Tasks created</span>
+                </div>
+
+                <div class="stat-card">
+                    <h3>Completed Tasks</h3>
+                    <p class="stat-number" id="completed-tasks">0</p>
+                    <span>Tasks finished</span>
+                </div>
+
+                <div class="stat-card">
+                    <h3>Study Hours</h3>
+                    <p class="stat-number" id="study-hours">0</p>
+                    <span>Actual time recorded</span>
+                </div>
+
+                <div class="stat-card">
+                    <h3>Task Progress</h3>
+                    <p class="stat-number" id="daily-progress">0%</p>
+                    <span>Completion rate</span>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2>Upcoming Tasks</h2>
+                <div id="dashboard-task-preview"></div>
+            </div>
+
+            <div class="content-card">
+                <h2>Scheduled Study Sessions</h2>
+                <div id="dashboard-timetable-preview"></div>
+            </div>
+        </section>
+
+        <!-- TASKS -->
+        <section id="tasks-section" class="app-section hidden">
+            <div class="content-card">
+                <h2>Task Manager</h2>
+                <p>Add tasks, set deadlines, and track completion.</p>
+
+                <form id="task-form" class="form-grid">
+                    <input
+                        type="text"
+                        id="task-input"
+                        placeholder="What do you need to study?"
+                        required
+                    >
+
+                    <select id="task-subject" required>
+                        <option value="">Choose subject</option>
+                    </select>
+
+                    <input type="date" id="task-deadline" required>
+
+                    <button type="submit" class="primary-button">+ Add Task</button>
+                </form>
+
+                <div id="task-list" class="item-list"></div>
+                <p id="empty-message" class="empty-message">No tasks yet. Add your first task!</p>
+            </div>
+        </section>
+
+        <!-- TIMETABLE -->
+        <section id="timetable-section" class="app-section hidden">
+            <div class="content-card">
+                <h2>Study Timetable</h2>
+                <p>Organise your study sessions by time and subject.</p>
+
+                <form id="timetable-form" class="form-grid">
+                    <input
+                        type="text"
+                        id="session-name"
+                        placeholder="Session name"
+                        required
+                    >
+
+                    <select id="session-subject" required>
+                        <option value="">Choose subject</option>
+                    </select>
+
+<label for="session-date">Study date</label>
+<input type="date" id="session-date" required>
+
+<label for="session-start">Start time</label>
+<input type="time" id="session-start" required>
+
+<label for="session-end">End time</label>
+<input type="time" id="session-end" required>
+
+                    <button type="submit" class="primary-button">+ Add Session</button>
+                </form>
+
+                <div id="timetable-list" class="item-list"></div>
+                <p id="empty-timetable" class="empty-message">No study sessions scheduled yet.</p>
+            </div>
+        </section>
+
+        <!-- SUBJECTS -->
+        <section id="subjects-section" class="app-section hidden">
+            <div class="content-card">
+                <h2>Subject Tracker</h2>
+                <p>Add your subjects and track the chapters you need to study.</p>
+
+                <form id="subject-form" class="form-grid">
+                    <input
+                        type="text"
+                        id="subject-input"
+                        placeholder="Enter a subject name"
+                        required
+                    >
+                    <button type="submit" class="primary-button">+ Add Subject</button>
+                </form>
+
+                <div id="subject-list" class="item-list"></div>
+                <p id="empty-subjects" class="empty-message">No subjects added yet.</p>
+            </div>
+        </section>
+
+        <!-- STUDY TIMER -->
+        <section id="timer-section" class="app-section hidden">
+            <div class="content-card timer-card">
+                <h2>Study Timer</h2>
+                <p>Start a focused session and record the time you study.</p>
+
+                <label for="timer-subject">What are you studying?</label>
+                <select id="timer-subject">
+                    <option value="">Choose subject</option>
+                </select>
+
+                <div id="timer-display" class="timer-display">00:00:00</div>
+
+                <div class="timer-buttons">
+                    <button id="timer-start" class="primary-button">Start</button>
+                    <button id="timer-pause" class="secondary-button" disabled>Pause</button>
+                    <button id="timer-resume" class="secondary-button" disabled>Resume</button>
+                    <button id="timer-save" class="primary-button" disabled>Save Session</button>
+                    <button id="timer-reset" class="delete-button">Reset</button>
+                </div>
+
+                <p id="timer-status" class="status-message">Ready when you are!</p>
+            </div>
+
+            <div class="content-card">
+                <h2>Recorded Study Sessions</h2>
+                <div id="study-session-list" class="item-list"></div>
+                <p id="empty-study-sessions" class="empty-message">No study time recorded yet.</p>
+            </div>
+        </section>
+
+        <!-- PROGRESS -->
+        <section id="progress-section" class="app-section hidden">
+            <div class="content-card">
+                <h2>Your Study Progress</h2>
+                <p>Review your task completion and recorded study time.</p>
+
+                <div class="progress-panel">
+                    <h3>Tasks completed</h3>
+                    <p id="progress-task-summary">0 out of 0 tasks completed</p>
+
+                    <div class="progress-track">
+                        <div id="progress-bar" class="progress-fill"></div>
+                    </div>
+
+                    <p id="progress-percentage">0%</p>
+                </div>
+
+                <div class="progress-panel">
+                    <h3>Total recorded study time</h3>
+                    <p id="progress-study-time">0 hours</p>
+                </div>
+
+                <div class="progress-panel">
+                    <h3>Subjects</h3>
+                    <p id="progress-subject-count">0 subjects added</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- NOTES -->
+        <section id="notes-section" class="app-section hidden">
+            <div class="content-card">
+                <h2>Study Notes</h2>
+                <p>Create notes for concepts, reminders, and revision.</p>
+
+                <form id="note-form">
+                    <input type="hidden" id="note-id">
+
+                    <input
+                        type="text"
+                        id="note-title"
+                        placeholder="Note title"
+                        required
+                    >
+
+                    <textarea
+                        id="note-content"
+                        rows="5"
+                        placeholder="Write your study notes here..."
+                        required
+                    ></textarea>
+
+                    <div class="form-actions">
+                        <button type="submit" class="primary-button" id="note-save-button">
+                            Save Note
+                        </button>
+                        <button type="button" class="secondary-button" id="note-cancel-button">
+                            Cancel Edit
+                        </button>
+                    </div>
+                </form>
+
+                <div id="notes-list" class="item-list"></div>
+                <p id="empty-notes" class="empty-message">No notes yet. Create your first note!</p>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
